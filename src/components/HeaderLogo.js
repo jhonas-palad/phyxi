@@ -1,5 +1,6 @@
 import React from 'react'
 import {View, Text, StyleSheet }from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 const HeaderLogo = () => {
 
   return (
@@ -7,7 +8,7 @@ const HeaderLogo = () => {
         style={styles.container}
     >
         <Text>
-            Phyxi
+            <Icon name="rocket" size={30} color="#900"/>
         </Text>
     </View>
   )
