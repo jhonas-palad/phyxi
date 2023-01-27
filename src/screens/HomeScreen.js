@@ -13,28 +13,34 @@ export const HomeScreen = (props) => {
   const scrollY = React.useRef(new Animated.Value(0)).current; //created once
   //Animated.Value returns something diffent than just a value.
   //We have to wrap it inside the Animated.View
+  const H_MAX_HEIGHT = 60;
+  const H_MIN_HEIGHT = 0;
+  const H_SCROLL_DISTANCE = H_MAX_HEIGHT -H_MIN_HEIGHT;
   const headerHeight = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [50, 0],
+    inputRange: [0, H_SCROLL_DISTANCE],
+    outputRange: [60, 0],
+    extrapolate:'clamp'
   });
   const headerTranslateY = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [0, -50],
+    inputRange: [0, 60],
+    outputRange: [0, -60],
+    extrapolate:'clamp'
   })
   const headerOpacity = scrollY.interpolate({
-    inputRange:[0, 50],
+    inputRange:[0, 60],
     outputRange: [1, 0],
+    extrapolate: 'clamp'
   });
-  console.log(scrollY)
-  console.log(typeof headerHeight)
   return (
     <View style={styles.container}>
-      <Header style={{height:headerHeight < 0 ? 0: headerHeight,transform: [{translateY: headerTranslateY}], opacity: headerOpacity}}>Headerrrr</Header>
+      <Header style={{height:headerHeight, transform: [{translateY: headerTranslateY}], opacity: headerOpacity}}>
+        
+      </Header>
       <Animated.ScrollView
         style={[
           styles.scrollView,
           {
-
+            flex: 1
           }
         ]}
         showsVerticalScrollIndicator={false}
@@ -42,11 +48,11 @@ export const HomeScreen = (props) => {
         scrollEventThrottle={5}
         onScroll={
           Animated.event([{
-                nativeEvent: { contentOffset:{y: scrollY}}
-              }], { 
-              listener: (event) => null, 
-              useNativeDriver:false
-            }
+            nativeEvent: { contentOffset:{y: scrollY}}
+          }], { 
+            listener: (event) => null, 
+            useNativeDriver:false
+          }
           )
         }
       >
@@ -64,11 +70,11 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "blue",
+    backgroundColor: "blue",
   },
   scrollView: {
     flex:1,
-    // backgroundColor:""
+    backgroundColor:"red"
   },
   fakeContent: {
     height: 250,

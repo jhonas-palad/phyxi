@@ -12,7 +12,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function Header({style,children}) {
-    console.log("ASD",style?.height);
   return (
     <Animated.View style={[styles.header, style]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -31,7 +30,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 16,
+        padding: 12,
         backgroundColor: "white",
+        position: "absolute",
+        top:0,
+        left:0,
+        right: 0,
+        height: 100,
+        zIndex:2
     }
 });
