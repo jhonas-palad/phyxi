@@ -1,30 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-
-import TabNavigation from './src/navigation/tabNavigation';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-
-
-const Stack = createStackNavigator();
-
+import 'react-native-gesture-handler';
+import {SafeAreaView } from 'react-native';
+import RootNavigator from './src/navigation/RootNavigator';
 
 export default function App() {
   return (
-    <SafeAreaView style={{flex:1}}>
-      
-      <TabNavigation />
-    </SafeAreaView>
+      <SafeAreaView style={[{flex:1}]}>
+          <RootNavigator />
+      </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
