@@ -7,43 +7,46 @@ export const withSnap = ({
     startValue = 0,
     endValue = 0,
     duration = 200,
-    height = 500
+    height = 60
   }) => WrappedComponent => {
-    return class SnapHeader extends Component {
-        UNSAFE_componentWillMount() {
-            this.animatedValue = new Animated.Value(startValue);
-            this.panResponder = PanResponder.create({
-                onMoveShouldSetPanResponder: () => true,
-                onMoveShouldSetPanResponderCapture: () => true,
-                onPanResponderMove: (e, {dy}) => {
-                    console.log(dy)
-                    if(dy >= 30){
-                        this.animatedValue.setValue(1 - Math.abs(dy / height))
-                    }else if(dy <= -30){
-                        this.animatedValue.setValue(Math.abs(dy/ height))
-                    }
-                },
-                onPanResponderRelease: (e, {dy}) => {
-                    if (dy < 0 && Math.abs(dy) > 30) {
-                        Animated.timing(this.animatedValue,{
-                            duration,
-                            toValue: endValue
-                        }).start();
-                    }else if(dy > 0 && Math.abs(dy) > 30){
-                        Animated.timing(this.animatedValue, {
-                            duration,
-                            toValue: startValue
-                        }).start();
-                    }
+    return () => {
+        const animatedValue =  React.useRef(new Animated.Value(startValue)).current;
+        const panResponder = React.useRef(PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+            onMoveShouldSetPanResponderCapture: () => true,
+            onPanResponderMove: (e, {dy}) => {
+                
+                if(dy >= 30){
+                    //Scrolling down
+                    console.log("down")
+                    animatedValue.setValue(1 - Math.abs(dy / height))
+                }else if(dy <= -30){
+                    //Scrolling up
+                    
+                    console.log("up")
+                    animatedValue.setValue(Math.abs(dy / height))
                 }
-            })
-
-        }
-            
-        render(){
-            return (
-                <WrappedComponent snap={{startValue, endValue,duration,height, panHandlers:this.panResponder.panHandlers, animatedValue: this.animatedValue}} />
-            )
-        }
+                console.log("animatedValue", animatedValue)
+            },
+            onPanResponderRelease: (e, {dy}) => {
+                if (dy < 0 && Math.abs(dy) > 30) {
+                    Animated.timing(animatedValue,{
+                        duration,
+                        toValue: endValue,
+                        useNativeDriver: true
+                    }).start();
+                }else if(dy > 0 && Math.abs(dy) > 30){
+                    Animated.timing(animatedValue, {
+                        duration,
+                        toValue: startValue,
+                        useNativeDriver: true
+                    }).start();
+                }
+            }
+        })).current;
+        return (
+            <WrappedComponent snap={{startValue, endValue,duration,height, panHandlers:panResponder.panHandlers, animatedValue: animatedValue}} />
+        )
+    
     }
 }
