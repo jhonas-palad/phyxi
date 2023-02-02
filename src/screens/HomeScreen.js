@@ -2,27 +2,23 @@ import React from 'react';
 import { 
   Animated,
   View, 
-  Text,
-  Dimensions,
   StyleSheet,
   RefreshControl,
-  TouchableOpacity,
-  PanResponder
 } from 'react-native';
-
 
 import { useNavigation } from '@react-navigation/native';
 import HomeHeader from '../components/HomeHeader';
-import { StatusBar } from 'expo-status-bar';
-
+import { getHeaderTitle } from '@react-navigation/elements';
 export const HomeScreen = (props) => {
     const navigation = useNavigation();
+    const animatedValue = React.useRef(new Animated.Value(0)).current;
     React.useEffect(()=> {
       navigation.setOptions({
-        title: 'All services',
+        title: 'Home',
         headerShown: true,
-        header: () => {
-          return <HomeHeader />
+        header: ({navigation, route, options, back}) => {
+          const title = getHeaderTitle(options, route.name);
+          return <HomeHeader title={title}/>
         }
       });
     }, []);
@@ -36,7 +32,6 @@ export const HomeScreen = (props) => {
 
     return (
       <>
-        <StatusBar />
         <View  style={[styles.container, {}]}>
             <Animated.ScrollView
               style={[
@@ -47,6 +42,7 @@ export const HomeScreen = (props) => {
               contentInsetAdjustmentBehavior="automatic"
               contentContainerStyle ={styles.scrollView}
               refreshControl = {<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+              onScroll={Animated.event([{nativeEvent: {contentOffset: {y: animatedValue}}}], {useNativeDriver:false})}
             >
               <View style={[{marginBottom: 12}]}>
                 <View style={[styles.fakeContent, {backgroundColor: '#222222'}]}/>

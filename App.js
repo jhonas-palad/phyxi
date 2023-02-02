@@ -7,7 +7,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider>
-      <Box flex={1} safeAreaX _dark={{bg: '#334155'}} _light={{bg:'info.200'}}>
+      <Box flex={1} safeAreaX _dark={{bg: 'info.800'}} _light={{bg:'info.200'}}>
           <RootNavigator />
       </Box>
     </NativeBaseProvider>

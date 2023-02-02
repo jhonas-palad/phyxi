@@ -1,41 +1,56 @@
-import { Animated, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { FontAwesome5 } from '@expo/vector-icons';
-import {Text, Box, Heading, Button, HStack} from 'native-base';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import {Heading, IconButton, HStack, Icon} from 'native-base';
 
-const HomeHeader = props => {
+const HomeHeader = ({title}) => {
     const navigation = useNavigation();
-
+    const handleOnPress = (e) => {
+        navigation.navigate('Search');
+    }
     return (
-        <Box alignItems='stretch'
-        justifyContent='center'
-        zIndex={5} safeAreaTop _light={{bg: 'info.200'}}>
-            <HStack justifyContent="space-between" marginBottom={2}>
-                <HStack padding={0} space={0} alignItems="center">
-                    <Button
-                        color="primary.100"
-                        size="sm"
-                        variant="ghost"
-                    >
-                        <FontAwesome5 name={'bars'} color="#0ea5e9" size={20} />
-                    </Button>
-                    <Heading letterSpacing={-1} size="md" color="info.500">All services</Heading>
-                </HStack>
-                <View>
-                    <FontAwesome5 name={"user-alt"} color="#f8fafc" size={24} />
-                </View>
+   
+        <HStack 
+            safeAreaTop
+            safeAreaX={1.5}
+            paddingBottom={1.5}
+            _light={{bg: 'info.200'}}
+            _dark={{bg: 'info.800'}} justifyContent="space-between" 
+        >
+            <HStack padding={0} space={1.5} alignItems="center">
+                <IconButton
+                icon={<Icon as={FontAwesome5} name="bars" />}
+                _icon={{
+                    color: 'info.400',
+                    size: 'md'
+                }}
+                borderRadius="full"
+                variant="ghost" />
+                <Heading letterSpacing={-1} size="md" color="info.500">{title}</Heading>
+            </HStack >
+            <HStack>
+            <IconButton
+                icon={<Icon as={Ionicons} name="ios-search" />}
+                _icon={{
+                    color: 'info.400',
+                    size: 'md'
+                }}
+                borderRadius="full"
+                variant="ghost" 
+            />
+            <IconButton
+                icon={<Icon as={FontAwesome5} name="user-alt" />}
+                _icon={{
+                    color: 'info.400',
+                    size: 'md'
+                }}
+                borderRadius="full"
+                variant="ghost" 
+            />
             </HStack>
-            <Animated.View>
-                <TouchableOpacity onPress={()=> navigation.navigate('Search')} style={[styles.input]}>
-                        <Text style={{color:"#6b7280"}}>
-                            Search
-                        </Text>
-                </TouchableOpacity>
+        </HStack>
 
-            </Animated.View>
-        </Box>
-        
     )
 }
 
@@ -44,7 +59,6 @@ export default HomeHeader
 const styles = StyleSheet.create({
     input: {
         backgroundColor: "#f3f4f6",
-        padding: 10,
         borderRadius: 16,
         width:'100%',
         zIndex:55

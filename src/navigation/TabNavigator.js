@@ -63,7 +63,6 @@ const TabNavigator = () => {
             <Tab.Screen name="Transaction" component={Transactions}/>
             <Tab.Screen name="Inbox" component={Transactions}/>
             <Tab.Screen name="Profile" component={Transactions}/>
-            <Tab.Screen name="Menu" component={Transactions}/>
         </Tab.Navigator>
     )
 }
